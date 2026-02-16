@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     
     steps:
     - name: Checkout code
@@ -19,22 +18,50 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: 'gradle'
     
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
       
-    - name: Make gradlew executable
-      run: chmod +x gradlew || echo "gradlew not found, will create"
-      
-    - name: Setup Gradle Wrapper
+    - name: Download and setup Gradle wrapper
       run: |
-        if [ ! -f gradlew ]; then
-          gradle wrapper --gradle-version 8.2 --distribution-type bin
+        # Create gradle wrapper directory
+        mkdir -p gradle/wrapper
+        
+        # Download gradle-wrapper.jar
+        wget -q https://raw.githubusercontent.com/gradle/gradle/v8.2.0/gradle/wrapper/gradle-wrapper.jar -O gradle/wrapper/gradle-wrapper.jar
+        
+        # Create gradle-wrapper.properties if missing
+        if [ ! -f gradle/wrapper/gradle-wrapper.properties ]; then
+          cat > gradle/wrapper/gradle-wrapper.properties << 'EOF'
+        distributionBase=GRADLE_USER_HOME
+        distributionPath=wrapper/dists
+        distributionUrl=https\://services.gradle.org/distributions/gradle-8.2-bin.zip
+        networkTimeout=10000
+        zipStoreBase=GRADLE_USER_HOME
+        zipStorePath=wrapper/dists
+        EOF
         fi
+        
+        # Create gradlew if missing
+        if [ ! -f gradlew ]; then
+          cat > gradlew << 'EOF'
+        #!/bin/sh
+        exec java -jar "$(dirname "$0")/gradle/wrapper/gradle-wrapper.jar" "$@"
+        EOF
+        fi
+        
         chmod +x gradlew
       
-    - name: Clear Gradle cache
+    - name: Build Debug APK
+      run: ./gradlew assembleDebug --stacktrace --no-daemon
+      
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      if: success()
+      with:
+        name: ReelSummary-APK
+        path: app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 7    - name: Clear Gradle cache
       run: |
         rm -rf ~/.gradle/caches
         rm -rf ~/.gradle/wrapper
