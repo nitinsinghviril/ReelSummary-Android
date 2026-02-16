@@ -23,26 +23,49 @@ class ShareReceiverActivity : AppCompatActivity() {
     private val geminiApiKey = "AIzaSyBRo3wvBMA6c_wM71LI0pShpT_LSsacOzk"
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        
-        val layout = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(40, 40, 40, 40)
-        }
-        
-        val progressBar = ProgressBar(this)
-        val statusText = TextView(this).apply {
-            text = "Generating summary..."
-            textSize = 16f
-            setPadding(0, 20, 0, 0)
-        }
-        
-        layout.addView(progressBar)
-        layout.addView(statusText)
-        setContentView(layout)
-        
-        handleIncomingShare(statusText)
+    super.onCreate(savedInstanceState)
+    
+    // Set background
+    window.decorView.setBackgroundColor(Color.parseColor("#FAFAFA"))
+    
+    val layout = LinearLayout(this).apply {
+        orientation = LinearLayout.VERTICAL
+        setPadding(80, 120, 80, 80)
+        gravity = android.view.Gravity.CENTER
     }
+    
+    // AI Robot emoji
+    val emojiText = TextView(this).apply {
+        text = "🤖"
+        textSize = 72f
+        gravity = android.view.Gravity.CENTER
+        setPadding(0, 0, 0, 30)
+    }
+    
+    // Progress bar
+    val progressBar = ProgressBar(this).apply {
+        indeterminateDrawable.setColorFilter(
+            Color.parseColor("#E1306C"),
+            android.graphics.PorterDuff.Mode.SRC_IN
+        )
+    }
+    
+    // Status text
+    val statusText = TextView(this).apply {
+        text = "🎬 Analyzing reel..."
+        textSize = 18f
+        setTextColor(Color.parseColor("#424242"))
+        setPadding(0, 40, 0, 0)
+        gravity = android.view.Gravity.CENTER
+    }
+    
+    layout.addView(emojiText)
+    layout.addView(progressBar)
+    layout.addView(statusText)
+    setContentView(layout)
+    
+    handleIncomingShare(statusText)
+}
 
     private fun handleIncomingShare(statusText: TextView) {
         when (intent?.action) {
