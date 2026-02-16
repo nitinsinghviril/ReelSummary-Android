@@ -11,6 +11,10 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+
+    - name: Create local.properties
+  run: |
+    echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" > local.properties
       
     - uses: actions/setup-java@v4
       with:
