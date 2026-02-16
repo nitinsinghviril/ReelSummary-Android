@@ -4,16 +4,26 @@ plugins {
 }
 
 android {
-    namespace = "com.reelsummary"
-    compileSdk = 34
-
+    // ... existing config ...
+    
     defaultConfig {
-        applicationId = "com.reelsummary"
-        minSdk = 26
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        // ... existing config ...
+        
+        // Read API key from local.properties
+        val localProperties = File(rootProject.rootDir, "local.properties")
+        if (localProperties.exists()) {
+            val properties = java.util.Properties()
+            properties.load(localProperties.inputStream())
+            buildConfigField("String", "GEMINI_API_KEY", "\"${properties.getProperty("GEMINI_API_KEY", "")}\"")
+        } else {
+            buildConfigField("String", "GEMINI_API_KEY", "\"\"")
+        }
     }
+    
+    buildFeatures {
+        buildConfig = true
+    }
+}
 
     buildTypes {
         release {
