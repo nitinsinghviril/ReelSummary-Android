@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ReelSummary</string>
+    <string name="app_tagline">AI-powered Instagram Reel summaries</string>
+    <string name="loading">Generating summary…</string>
+    <string name="error_no_url">No Instagram URL found</string>
+    <string name="success">Summary created!</string>
+</resources>
