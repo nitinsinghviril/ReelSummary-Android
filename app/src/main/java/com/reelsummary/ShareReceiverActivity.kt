@@ -19,8 +19,8 @@ class ShareReceiverActivity : AppCompatActivity() {
 
     private val client = OkHttpClient()
     
-    // TODO: Replace with your API key from console.anthropic.com
-    private val apiKey = "YOUR_ANTHROPIC_API_KEY_HERE"
+    // TODO: Replace with your API key 
+    private val apiKey = "AIzaSyBRo3wvBMA6c_wM71LI0pShpT_LSsacOzk"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
