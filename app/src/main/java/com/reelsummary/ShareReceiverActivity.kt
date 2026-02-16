@@ -20,7 +20,7 @@ class ShareReceiverActivity : AppCompatActivity() {
     private val client = OkHttpClient()
     
     
-    private val geminiApiKey = "AIzaSyBRo3wvBMA6c_wM71LI0pShpT_LSsacOzk"
+    private val geminiApiKey = System.getenv("GEMINI_API_KEY") ?: ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
