@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Instagram gradient colors -->
+    <color name="instagram_pink">#E1306C</color>
+    <color name="instagram_purple">#C13584</color>
+    <color name="instagram_blue">#5B51D8</color>
+    <color name="instagram_light_blue">#405DE6</color>
+    
+    <!-- App colors -->
+    <color name="primary">#E1306C</color>
+    <color name="primary_dark">#C13584</color>
+    <color name="accent">#5B51D8</color>
+    
+    <!-- Basic colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray_light">#FAFAFA</color>
+    <color name="gray_dark">#424242</color>
+</resources>
