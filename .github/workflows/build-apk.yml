@@ -8,28 +8,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
 
-    - name: Create local.properties
-  run: |
-    echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" > local.properties
-      
     - uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: '' # DISABLE CACHE
-        
-    - name: Build
-      uses: gradle/gradle-build-action@v2
-      with:
-        cache-disabled: true
-        cache-read-only: true
-        arguments: assembleDebug
-        
+
+    - name: Build APK
+      run: |
+        export GRADLE_USER_HOME=$(mktemp -d)
+        chmod +x gradlew
+        ./gradlew assembleDebug --no-daemon --no-build-cache
+
     - uses: actions/upload-artifact@v4
       with:
-        name: app
+        name: app-debug
         path: app/build/outputs/apk/debug/app-debug.apk
