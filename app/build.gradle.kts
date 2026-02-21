@@ -1,29 +1,20 @@
+cat > app/build.gradle.kts << 'EOF'
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
 
 android {
-    // ... existing config ...
-    
+    namespace = "com.reelsummary"
+    compileSdk = 34
+
     defaultConfig {
-        // ... existing config ...
-        
-        // Read API key from local.properties
-        val localProperties = File(rootProject.rootDir, "local.properties")
-        if (localProperties.exists()) {
-            val properties = java.util.Properties()
-            properties.load(localProperties.inputStream())
-            buildConfigField("String", "GEMINI_API_KEY", "\"${properties.getProperty("GEMINI_API_KEY", "")}\"")
-        } else {
-            buildConfigField("String", "GEMINI_API_KEY", "\"\"")
-        }
+        applicationId = "com.reelsummary"
+        minSdk = 26
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0"
     }
-    
-    buildFeatures {
-        buildConfig = true
-    }
-}
 
     buildTypes {
         release {
@@ -47,22 +38,5 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.google.code.gson:gson:2.10.1")
-}}
-
-dependencies {
-    // Core Android
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    
-    // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    
-    // Networking (OkHttp only, no Retrofit)
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    
-    // JSON
-    implementation("com.google.code.gson:gson:2.10.1")
 }
+EOF
